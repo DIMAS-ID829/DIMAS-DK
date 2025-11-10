@@ -1,10 +1,12 @@
+//javascript file//
+
 // ============================================
 // INITIALIZE AOS (Animate On Scroll)
 // ============================================
 AOS.init({
     once: true,
-    offset: 10,
-    duration: 800
+    offset: 200, // Increased from 10 to trigger earlier
+    duration: 400 // Reduced from 800 for faster animation
 });
 
 // ============================================
@@ -490,6 +492,74 @@ document.addEventListener('DOMContentLoaded', function() {
             this.reset();
         });
     }
+
+    // JavaScript for Modals with Carousel Pause
+    const skillCards = document.querySelectorAll('.skill-card');
+    const modals = document.querySelectorAll('.modal');
+    const closes = document.querySelectorAll('.close');
+    const carousel = document.querySelector('.skills-carousel');
+
+    skillCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const skill = this.getAttribute('data-skill');
+            const modal = document.getElementById(`modal-${skill}`);
+            if (modal) {
+                modal.style.display = 'block';
+                if (carousel) {
+                    carousel.style.animationPlayState = 'paused'; // Pause carousel when modal opens
+                }
+            }
+        });
+    });
+
+    closes.forEach(close => {
+        close.addEventListener('click', function() {
+            this.parentElement.parentElement.style.display = 'none';
+            if (carousel) {
+                carousel.style.animationPlayState = 'running'; // Resume carousel when modal closes
+            }
+        });
+    });
+
+    window.addEventListener('click', function(event) {
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+                if (carousel) {
+                    carousel.style.animationPlayState = 'running'; // Resume carousel when modal closes via outside click
+                }
+            }
+        });
+    });
+
+    // Add to your existing JS (inside DOMContentLoaded)
+    const serviceCards = document.querySelectorAll('.service-card');
+    const serviceModals = document.querySelectorAll('.modal'); // Assuming all modals, but filter if needed
+    const serviceCloses = document.querySelectorAll('.close');
+
+    serviceCards.forEach(card => {
+        card.addEventListener('click', function() {
+            const service = this.getAttribute('data-service');
+            const modal = document.getElementById(`modal-${service}`);
+            if (modal) {
+                modal.style.display = 'block';
+            }
+        });
+    });
+
+    serviceCloses.forEach(close => {
+        close.addEventListener('click', function() {
+            this.parentElement.parentElement.style.display = 'none';
+        });
+    });
+
+    window.addEventListener('click', function(event) {
+        serviceModals.forEach(modal => {
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    });
 
     init();
 
