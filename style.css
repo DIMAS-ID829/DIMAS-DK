@@ -21,6 +21,13 @@
     --transition-spring: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     --glass-bg: rgba(255, 255, 255, 0.05);
     --glass-border: rgba(255, 255, 255, 0.1);
+    --skill-card-width: 260px;
+    --skill-gap: 2rem;
+    --num-unique-skills: 9;
+    --skill-duration-desktop: 18s;
+    --skill-duration-tablet: 14s;
+    --skill-duration-mobile: 11s;
+    --skill-duration-small: 9s;
 }
 
 * {
@@ -37,22 +44,22 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    zoom: 0.67; /* ini bikin tampilannya 67% */
-}
-@font-face {
-  font-family: 'Dkfont-regular';
-  src: url('fonts/DkFont-Regular.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+    zoom: 0.90;
 }
 
 @font-face {
-  font-family: 'NKfont-Regular';
-  src: url('fonts/Naskyfont-Regular.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Dkfont-regular';
+    src: url('fonts/DkFont-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
 }
 
+@font-face {
+    font-family: 'NKfont-Regular';
+    src: url('fonts/Naskyfont-Regular.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+}
 
 /* ============================================
    WELCOME SCREEN STYLES
@@ -73,12 +80,8 @@ body {
 }
 
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
 
 @keyframes fadeOut {
@@ -94,7 +97,6 @@ body {
     }
 }
 
-/* Background Effects */
 .background-effects {
     position: absolute;
     inset: 0;
@@ -130,7 +132,6 @@ body {
     }
 }
 
-/* Welcome Content */
 .welcome-content {
     position: relative;
     z-index: 10;
@@ -140,7 +141,6 @@ body {
     width: 100%;
 }
 
-/* Icon Container */
 .icon-container {
     display: flex;
     justify-content: center;
@@ -207,7 +207,6 @@ body {
     color: white;
 }
 
-/* Welcome Text */
 .welcome-text {
     margin-bottom: clamp(24px, 6vw, 48px);
 }
@@ -278,78 +277,9 @@ body {
     }
 }
 
-/* Website Link */
-.website-link-container {
-    animation: fadeUp 0.6s ease backwards;
-    animation-delay: 1.6s;
-}
-
-.website-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: clamp(8px, 2vw, 12px) clamp(16px, 4vw, 24px);
-    border-radius: 9999px;
-    text-decoration: none;
-    position: relative;
-    transition: transform 0.3s ease;
-}
-
-.website-link:hover {
-    transform: scale(1.05);
-}
-
-.website-link-glow {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(99, 102, 241, 0.2), rgba(168, 85, 247, 0.2));
-    border-radius: 9999px;
-    filter: blur(8px);
-    transition: filter 0.3s ease;
-}
-
-.website-link:hover .website-link-glow {
-    filter: blur(12px);
-}
-
-.website-link-content {
-    position: relative;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.globe-icon {
-    width: clamp(16px, 4vw, 20px);
-    height: clamp(16px, 4vw, 20px);
-    color: #6366f1;
-}
-
-.website-text {
+.website-url {
     font-size: clamp(18px, 4vw, 24px);
-    background: linear-gradient(to right, #6366f1, #a855f7);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-}
-
-.typing-cursor {
-    display: inline-block;
-    width: 2px;
-    height: 1em;
-    background: linear-gradient(to bottom, #6366f1, #a855f7);
-    margin-left: 2px;
-    animation: blink 0.7s infinite;
-    vertical-align: middle;
-}
-
-@keyframes blink {
-    0%, 100% {
-        opacity: 1;
-    }
-    50% {
-        opacity: 0;
-    }
+    color: #6366f1;
 }
 
 .container {
@@ -643,6 +573,11 @@ header.scrolled {
     font-weight: 300;
 }
 
+@keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
 .hero-desc {
     font-size: 1.2rem;
     font-weight: 300;
@@ -669,7 +604,7 @@ header.scrolled {
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
     backdrop-filter: blur(10px);
-    transition: 0s;
+    transition: var(--transition-smooth);
 }
 
 .stat:hover {
@@ -713,6 +648,7 @@ header.scrolled {
     border: none;
     position: relative;
     overflow: hidden;
+    text-decoration: none;
 }
 
 .hire-btn.primary {
@@ -752,7 +688,7 @@ header.scrolled {
     justify-content: center;
     color: var(--text-secondary);
     text-decoration: none;
-    transition: 0s;
+    transition: var(--transition-smooth);
     font-size: 1.3rem;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
@@ -941,7 +877,7 @@ header.scrolled {
     border: 1px solid var(--glass-border);
     border-radius: var(--border-radius);
     backdrop-filter: blur(10px);
-    transition: 0s;
+    transition: var(--transition-smooth);
 }
 
 .highlight:hover {
@@ -1045,13 +981,22 @@ header.scrolled {
     overflow: hidden;
     margin-top: 3rem;
     position: relative;
+    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
 }
 
 .skills-carousel {
     display: flex;
-    gap: 2rem;
-    animation: scroll-skills 40s linear infinite;
+    gap: var(--skill-gap);
+    animation: scroll-skills var(--skill-duration-desktop) linear infinite;
+    will-change: transform;
+}
+.skills-carousel {
     width: max-content;
+}
+
+.skills-carousel:hover {
+    animation-play-state: paused;
 }
 
 @keyframes scroll-skills {
@@ -1059,13 +1004,13 @@ header.scrolled {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(calc(-280px * 9 - 18rem));
+        transform: translateX(-50%);
     }
 }
 
 .skill-card {
-    min-width: 260px;
-    width: 260px;
+    min-width: var(--skill-card-width);
+    width: var(--skill-card-width);
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
     border-radius: 20px;
@@ -1080,6 +1025,8 @@ header.scrolled {
     gap: 1rem;
     position: relative;
     overflow: hidden;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .skill-card::before {
@@ -1208,6 +1155,53 @@ header.scrolled {
     margin-top: 0.5rem;
 }
 
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+    animation: fadeIn 0.3s;
+}
+
+.modal-content {
+    background-color: var(--bg-primary);
+    margin: 15% auto;
+    padding: 2rem;
+    border: 1px solid var(--accent-primary);
+    width: 80%;
+    max-width: 600px;
+    border-radius: 20px;
+    box-shadow: 0 20px 50px rgba(0, 212, 255, 0.3);
+    position: relative;
+}
+
+.modal-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.close {
+    color: var(--text-primary);
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+    font-size: 2rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.close:hover,
+.close:focus {
+    color: var(--accent-primary);
+}
+
 /* Services Section */
 .services {
     background: var(--bg-secondary);
@@ -1229,6 +1223,19 @@ header.scrolled {
     animation: float 8s ease-in-out infinite;
 }
 
+.services::after {
+    content: '';
+    position: absolute;
+    bottom: 10%;
+    left: -5%;
+    width: 300px;
+    height: 300px;
+    background: radial-gradient(circle, rgba(168, 85, 247, 0.1) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(80px);
+    animation: float 12s ease-in-out infinite reverse;
+}
+
 .services-content {
     max-width: 1300px;
     margin: 0 auto;
@@ -1247,12 +1254,31 @@ header.scrolled {
     padding: 2.5rem;
     backdrop-filter: blur(10px);
     transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.service-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, transparent 50%);
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+}
+
+.service-card:hover::before {
+    opacity: 1;
 }
 
 .service-card:hover {
-    transform: translateY(-10px);
+    transform: translateY(-10px) scale(1.02);
     border-color: var(--accent-primary);
-    box-shadow: var(--shadow-hover);
+    box-shadow: var(--shadow-hover), 0 0 20px rgba(0, 212, 255, 0.2);
 }
 
 .service-icon {
@@ -1267,11 +1293,28 @@ header.scrolled {
     font-size: 2rem;
     color: var(--bg-primary);
     transition: var(--transition-smooth);
+    position: relative;
 }
 
 .service-card:hover .service-icon {
     transform: scale(1.1) rotate(5deg);
     box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
+}
+
+.service-icon::after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+    border-radius: 20px;
+    filter: blur(10px);
+    opacity: 0;
+    transition: opacity var(--transition-smooth);
+}
+
+.service-card:hover .service-icon::after {
+    opacity: 1;
 }
 
 .service-card h3 {
@@ -1284,6 +1327,7 @@ header.scrolled {
     color: var(--text-secondary);
     line-height: 1.8;
     margin-bottom: 1.5rem;
+    font-size: 1rem;
 }
 
 .service-features {
@@ -1299,6 +1343,12 @@ header.scrolled {
     border-radius: 20px;
     font-size: 0.85rem;
     font-weight: 500;
+    transition: var(--transition-smooth);
+}
+
+.service-features span:hover {
+    background: rgba(0, 212, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 /* Projects Section */
@@ -1738,16 +1788,7 @@ header.scrolled {
     }
 
     .skills-carousel {
-        animation: scroll-skills 25s linear infinite;
-    }
-
-    @keyframes scroll-skills {
-        0% {
-            transform: translateX(0);
-        }
-        100% {
-            transform: translateX(calc(-260px * 9 - 18rem));
-        }
+        animation: scroll-skills var(--skill-duration-tablet) linear infinite;
     }
 
     .skill-card {
@@ -1834,6 +1875,10 @@ header.scrolled {
         font-size: 0.9rem;
     }
 
+    .skills-carousel {
+        animation: scroll-skills var(--skill-duration-mobile) linear infinite;
+    }
+
     .skill-card {
         min-width: 220px;
         width: 220px;
@@ -1887,5 +1932,9 @@ header.scrolled {
     .about-img {
         width: 220px;
         height: 300px;
+    }
+
+    .skills-carousel {
+        animation: scroll-skills var(--skill-duration-small) linear infinite;
     }
 }
